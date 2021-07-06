@@ -21,12 +21,18 @@ def buscarUrl():
     if request.method == 'POST':
         url = request.json['url'] 
         loaded_model = pickle.load(open('Model_phishing.pkl', 'rb'))
-        result = loaded_model.predict(url)
+        result = loaded_model.predict([url])
         print(result)
-   
-        return jsonify([{"Result": url}]) 
-
+        DAT= replace(np.str(result))
+        return jsonify([{"Result": DAT}]) 
  
+def replace(cadena): 
+  
+    cadena= cadena.replace('[','');
+    cadena= cadena.replace(']','');
+    cadena= cadena.replace("'",'');
+   
+    return cadena 
 
 @app.route('/')
 def hello_world():
