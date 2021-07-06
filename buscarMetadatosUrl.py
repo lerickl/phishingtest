@@ -24,7 +24,7 @@ class buscarMetadatosurl():
         cadena=encoding.get('content')
         dat= replace_acentos(cadena)
         return dat
-    def obtener_author(self):
+ 
 
 
 

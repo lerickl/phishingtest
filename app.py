@@ -6,6 +6,7 @@ from PIL import Image
 import sqlite3
 from conexion import conex
 import json 
+import pickle
 from buscarMetadatosUrl import buscarMetadatosurl
 #import pickle
 app = Flask(__name__)
@@ -15,25 +16,17 @@ conn = conex()
 #conn.db_conexion()
 
 
-@app.route('/AnalizarUrl', methods=['POST'])
+@app.route('/analizarurl', methods=['POST'])
 def buscarUrl():
     if request.method == 'POST':
         url = request.json['url'] 
-        #loaded_model = pickle.load(open('Model_phishing.pkl', 'rb'))
-        #result = loaded_model.predict(url)
-        #print(result)
+        loaded_model = pickle.load(open('Model_phishing.pkl', 'rb'))
+        result = loaded_model.predict(url)
+        print(result)
    
         return jsonify([{"Result": url}]) 
 
-@app.route('/buscarUrl', methods=['POST'])
-def buscarUrl():
-    if request.method == 'POST':
-        url = request.json['url'] 
-        buscar = buscarMetadatosurl(url) 
-        tempTITLE=buscar.Obtener_TITLE()
-        tempDESCRIPCION=buscar.Obtener_Descripcion()
-         
-        return jsonify([{"titulo": tempTITLE,"descripcion": tempDESCRIPCION}]) 
+ 
 
 @app.route('/')
 def hello_world():
